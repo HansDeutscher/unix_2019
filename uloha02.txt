@@ -1,0 +1,34 @@
+1. Shift proběhne pouze pokud má dost parametrů, které má zahodit - funkce
+   testshift() postupně provede zahození 6 parametrů, ale "a b c d e" je pouze 5,
+   tedy poslední shift má k dispozici pouze 2 parametry místo požadovaných 3 a
+   nebude proto proveden.
+
+2. Proměnná $# označuje počet parametrů.
+
+   Zápis ${#N} znamená délka N. parametru, popř. proměnné N.
+
+   Zápis ${!VAR} by mělo znamenat vypiš hodnotu proměnné s názvem obsaženým v
+   proměnné VAR. V našem případě tedy f3 jako první paramentr přijme číslo N a
+   poté se pokusí vypsat N. parametr. Ať jsem zadal parametry jakékoliv,
+   dostal jsem ale chybu: -bash: ${!$1}: bad substitution.
+   Pozn. když jsem příkaz rozdělil na dva a sice:
+   		přiřazení $1 do proměnné VAR
+		volání ${!VAR}
+   tak už vše proběhlo podle očekávání. f3 3 a b c d vrátí b.
+
+   Výraz ${VAR:-VAL} je přiřazení "default" VAL hodnoty do proměnné VAR, pokud
+   přiřazení neproběhne úspěšně. V našem případě tedy dojde k přiřazení VAL do
+   VAR právě tehdy, když funkce f4 nepřijme žádné parametry.
+
+   Výraz ${VAR:N} značí, že má být prvních N znaků proměnné VAR vypuštěno.
+
+   Výraz ${VAR:N:M} je rozšíření předešlého - vypustí prvních N a vrátí pouze
+   M následujících znaků.
+
+   Zápis ${VAR/výraz/text} vymění první výskyt "výraz" za "text" v rámci
+   proměnné VAR.
+
+   Zápis ${VAR//výraz/text} vymění všechny výskyty "výraz" za "text" v rámci
+   proměnné VAR.
+
+   Proměnná @ označuje všechny parametry předané skriptu/funkci.
