@@ -1,0 +1,44 @@
+#!/bin/sh
+
+output=""
+while read line
+do
+	output="$line"'
+'"$output"
+done < /dev/stdin
+
+if [ "$1" = "-n" ]; then
+	group=$2
+	file="${TMP}/bflmpsvz"
+	echo "$output" > file
+	index=0
+	output=""
+	pom=""
+	while read line
+	do
+		if [ $index -ge $group ]; then
+			index=1
+			output="$output"'
+'"$pom"
+			pom="$line"
+		else
+			index=`expr $index + 1`
+			if [ "$pom" != "" ]; then
+				pom="$line"'
+'"$pom"
+			else
+				pom="$line"
+			fi
+		fi
+	done < file
+	if [ "$pom" != "" ]; then
+		output="${output}$pom"
+	fi
+	rm file
+	echo "$output" | tail -n +2
+else
+	echo "$output" | head -n -1
+fi
+
+
+exit 0
